@@ -1,18 +1,18 @@
 import requests
 from requests_oauthlib import OAuth1
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
-import settings
 import json
 import threading
 import time
 # import traceback
+from bot_config import BotConfig
 
 
 class XP_RPC():
 
     def __init__(self):
         self.connection = AuthServiceProxy(
-            settings.RPC_URL % (settings.rpc_user, settings.rpc_password))
+            BotConfig.RPC_URL % (BotConfig.RPC_USER, BotConfig.RPC_PASSWORD))
         self.tax = 1.0
 
     def get_address(self, name):
@@ -65,10 +65,10 @@ class Twitter():
 
     def __init__(self):
         self.xpd = XP_RPC()
-        self.auth_stream = OAuth1(settings.CONSUMER_KEY_STREAM, settings.CONSUMER_SECRET_STREAM,
-                                  settings.ACCESS_TOKEN_STREAM, settings.ACCESS_TOKEN_SECRET_STREAM)
-        self.auth_reply = OAuth1(settings.CONSUMER_KEY_REPLY, settings.CONSUMER_SECRET_REPLY,
-                                 settings.ACCESS_TOKEN_REPLY, settings.ACCESS_TOKEN_SECRET_REPLY)
+        self.auth_stream = OAuth1(BotConfig.CONSUMER_KEY_STREAM, BotConfig.CONSUMER_SECRET_STREAM,
+                                  BotConfig.ACCESS_TOKEN_STREAM, BotConfig.ACCESS_TOKEN_SECRET_STREAM)
+        self.auth_reply = OAuth1(BotConfig.CONSUMER_KEY_REPLY, BotConfig.CONSUMER_SECRET_REPLY,
+                                 BotConfig.ACCESS_TOKEN_REPLY, BotConfig.ACCESS_TOKEN_SECRET_REPLY)
         self.tweets = []
 
     def reply(self, text, reply_token):
